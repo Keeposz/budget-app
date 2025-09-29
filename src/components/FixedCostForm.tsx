@@ -60,6 +60,8 @@ const FixedCostForm: React.FC<FixedCostFormProps> = ({ onAddFixedCost }) => {
               <option>Utilities</option>
               <option>Taxes</option>
               <option>Subscriptions</option>
+              <option>Insurance</option>
+              <option>Healthcare</option>
               <option>Groceries</option>
               <option>Entertainment</option>
               <option>Transportation</option>

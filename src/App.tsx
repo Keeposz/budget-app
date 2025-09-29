@@ -202,6 +202,85 @@ function App() {
     URL.revokeObjectURL(url);
   };
 
+  const exportToPDF = () => {
+    // Create HTML content for PDF
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>Budget Report - ${displayMonth} ${displayYear}</title>
+        <style>
+          body { font-family: Arial, sans-serif; margin: 40px; color: #333; }
+          .header { text-align: center; margin-bottom: 30px; }
+          .summary { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+          .section { margin-bottom: 30px; }
+          .section h3 { border-bottom: 2px solid #667eea; padding-bottom: 5px; }
+          table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+          th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+          th { background-color: #667eea; color: white; }
+          .amount { text-align: right; font-weight: bold; }
+          .total { font-size: 1.2em; color: #667eea; }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <h1>Budget Management System</h1>
+          <h2>${displayMonth} ${displayYear} Report</h2>
+          <p>Generated on ${new Date().toLocaleDateString()}</p>
+        </div>
+        
+        <div class="summary">
+          <h3>Summary</h3>
+          <p><strong>Fixed Costs:</strong> €${fixedCostsTotal.toFixed(2)}</p>
+          <p><strong>Variable Expenses:</strong> €${variableExpensesTotal.toFixed(2)}</p>
+          <p class="total"><strong>Total Monthly Expenses:</strong> €${totalAmount.toFixed(2)}</p>
+        </div>
+        
+        <div class="section">
+          <h3>Fixed Costs (${fixedCosts.length} items)</h3>
+          <table>
+            <tr><th>Description</th><th>Category</th><th>Amount</th></tr>
+            ${fixedCosts.map(cost => `
+              <tr>
+                <td>${cost.description}</td>
+                <td>${cost.category}</td>
+                <td class="amount">€${cost.amount.toFixed(2)}</td>
+              </tr>
+            `).join('')}
+          </table>
+        </div>
+        
+        <div class="section">
+          <h3>Variable Expenses (${filteredExpenses.length} transactions)</h3>
+          <table>
+            <tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th></tr>
+            ${filteredExpenses.map(expense => `
+              <tr>
+                <td>${expense.date ? new Date(expense.date).toLocaleDateString() : 'N/A'}</td>
+                <td>${expense.description}</td>
+                <td>${expense.category}</td>
+                <td class="amount">€${expense.amount.toFixed(2)}</td>
+              </tr>
+            `).join('')}
+          </table>
+        </div>
+      </body>
+      </html>
+    `;
+    
+    // Open in new window for printing/saving as PDF
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(htmlContent);
+      printWindow.document.close();
+      printWindow.focus();
+      setTimeout(() => {
+        printWindow.print();
+      }, 250);
+    }
+  };
+
   const getChartData = () => {
     const categoryTotals: { [key: string]: number } = {};
     allExpenses.forEach(expense => {
@@ -304,6 +383,12 @@ function App() {
                               onClick={() => { exportToJSON(); setShowExportDropdown(false); }}
                             >
                               JSON
+                            </button>
+                            <button 
+                              className="dropdown-item" 
+                              onClick={() => { exportToPDF(); setShowExportDropdown(false); }}
+                            >
+                              PDF
                             </button>
                           </div>
                         )}
