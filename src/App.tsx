@@ -94,6 +94,11 @@ function App() {
   const variableExpensesTotal = expenses.reduce((total, expense) => total + expense.amount, 0);
   const fixedCostsTotal = fixedCosts.reduce((total, cost) => total + cost.amount, 0);
 
+  // Get current month and year
+  const currentDate = new Date();
+  const currentMonth = currentDate.toLocaleString('en-US', { month: 'long' });
+  const currentYear = currentDate.getFullYear();
+
   const getChartData = () => {
     const categoryTotals: { [key: string]: number } = {};
     allExpenses.forEach(expense => {
@@ -148,7 +153,8 @@ function App() {
             <div className="professional-header rounded">
               <Container>
                 <h1 className="mb-2 fw-bold">Financial Dashboard</h1>
-                <p className="mb-0 fs-5 opacity-90">Monthly Budget Overview & Expense Tracking</p>
+                <p className="mb-1 fs-5 opacity-90">Monthly Budget Overview & Expense Tracking</p>
+                <p className="mb-0 fs-6 opacity-75">{currentMonth} {currentYear}</p>
               </Container>
             </div>
           </Col>
@@ -211,7 +217,7 @@ function App() {
                       <p className="section-subtitle">Set up your monthly recurring expenses</p>
                     </div>
                     <div className="text-end">
-                      <div className="fw-bold text-success">{fixedCosts.length}</div>
+                      <div className="fw-bold text-white">{fixedCosts.length}</div>
                       <small className="text-muted">fixed costs</small>
                     </div>
                   </div>
@@ -234,10 +240,10 @@ function App() {
                   <div className="d-flex justify-content-between align-items-center">
                     <div>
                       <h3 className="section-title">Variable Expenses</h3>
-                      <p className="section-subtitle">Current month transactions</p>
+                      <p className="section-subtitle">{currentMonth} {currentYear} transactions</p>
                     </div>
                     <div className="text-end">
-                      <div className="fw-bold text-primary">{expenses.length}</div>
+                      <div className="fw-bold text-white">{expenses.length}</div>
                       <small className="text-muted">transactions</small>
                     </div>
                   </div>
