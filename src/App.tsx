@@ -62,8 +62,22 @@ function App() {
       </Navbar>
 
       <Container className="mt-4">
-        <Row>
-          <Col md={8}>
+        {/* Row for Chart */}
+        <Row className="mb-4">
+          <Col md={{ span: 8, offset: 2 }}>
+            <Card>
+              <Card.Body>
+                <Card.Title>Overzicht per Categorie</Card.Title>
+                <p className="text-center mb-1">Totaal: <strong>€ {totalAmount.toFixed(2)}</strong></p>
+                {expenses.length > 0 ? <CategoryChart chartData={getChartData()} /> : <p className="text-center">Geen data voor grafiek</p>}
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+        {/* Row for Expense List */}
+        <Row className="mb-4">
+          <Col md={{ span: 8, offset: 2 }}>
             <Card>
               <Card.Body>
                 <Card.Title>Mijn Uitgaven</Card.Title>
@@ -71,19 +85,11 @@ function App() {
               </Card.Body>
             </Card>
           </Col>
-          <Col md={4}>
-            <Card>
-              <Card.Body>
-                <Card.Title>Overzicht per Categorie</Card.Title>
-                <p className="text-center mb-1">Totaal: <strong>€ {totalAmount.toFixed(2)}</strong></p>
-                {expenses.length > 0 ? <CategoryChart chartData={getChartData()} /> : <p className='text-center'>Geen data voor grafiek</p>}
-              </Card.Body>
-            </Card>
-          </Col>
         </Row>
 
-        <Row className="mt-4">
-          <Col md={12}>
+        {/* Row for Expense Form */}
+        <Row className="mb-4">
+          <Col md={{ span: 8, offset: 2 }}>
             <Card>
               <Card.Body>
                 <Card.Title>Nieuwe Uitgave Toevoegen</Card.Title>
