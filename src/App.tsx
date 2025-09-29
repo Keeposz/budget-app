@@ -146,14 +146,14 @@ function App() {
           <Col md={{ span: 10, offset: 1 }}>
             <Card>
               <Card.Body>
-                <Card.Title className="text-center mb-4">📊 Maandelijks Budget Overzicht</Card.Title>
+                <Card.Title className="text-center mb-4">Maandelijks Budget Overzicht</Card.Title>
                 
                 {/* Summary Cards */}
                 <Row className="mb-4">
                   <Col md={4}>
                     <Card className="text-center h-100" style={{ backgroundColor: 'var(--card-background)', border: '2px solid #e3f2fd' }}>
                       <Card.Body>
-                        <h6 className="text-primary mb-2">💰 Vaste Kosten</h6>
+                        <h6 className="text-primary mb-2">Vaste Kosten</h6>
                         <h4 className="text-primary mb-0">€ {fixedCostsTotal.toFixed(2)}</h4>
                       </Card.Body>
                     </Card>
@@ -161,7 +161,7 @@ function App() {
                   <Col md={4}>
                     <Card className="text-center h-100" style={{ backgroundColor: 'var(--card-background)', border: '2px solid #fff3e0' }}>
                       <Card.Body>
-                        <h6 className="text-warning mb-2">🛒 Variabele Uitgaven</h6>
+                        <h6 className="text-warning mb-2">Variabele Uitgaven</h6>
                         <h4 className="text-warning mb-0">€ {variableExpensesTotal.toFixed(2)}</h4>
                       </Card.Body>
                     </Card>
@@ -169,7 +169,7 @@ function App() {
                   <Col md={4}>
                     <Card className="text-center h-100" style={{ backgroundColor: 'var(--card-background)', border: '2px solid #f3e5f5' }}>
                       <Card.Body>
-                        <h6 className="text-info mb-2">💸 Totaal</h6>
+                        <h6 className="text-info mb-2">Totaal</h6>
                         <h4 className="text-info mb-0">€ {totalAmount.toFixed(2)}</h4>
                       </Card.Body>
                     </Card>
@@ -193,7 +193,7 @@ function App() {
             <Card>
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <Card.Title className="mb-0">🛒 Variabele Uitgaven (Deze Maand)</Card.Title>
+                  <Card.Title className="mb-0">Variabele Uitgaven (Deze Maand)</Card.Title>
                   <small className="text-muted">{expenses.length} uitgaven</small>
                 </div>
                 <ExpenseList expenses={expenses} onDelete={deleteExpense} />
@@ -208,7 +208,7 @@ function App() {
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center mb-3">
                   <div>
-                    <Card.Title className="mb-1">💰 Vaste Kosten Beheer</Card.Title>
+                    <Card.Title className="mb-1">Vaste Kosten Beheer</Card.Title>
                     <p className="text-muted mb-0">Stel hier je maandelijkse vaste kosten in (huur, abonnementen, etc.)</p>
                   </div>
                   <small className="text-muted">{fixedCosts.length} vaste kosten</small>
@@ -225,7 +225,7 @@ function App() {
           <Col md={{ span: 10, offset: 1 }}>
             <Card>
               <Card.Body>
-                <Card.Title>➕ Nieuwe Uitgave Toevoegen</Card.Title>
+                <Card.Title>Nieuwe Uitgave Toevoegen</Card.Title>
                 <p className="text-muted mb-3">Voeg een nieuwe uitgave toe aan je budget overzicht</p>
                 <ExpenseForm onAddExpense={addExpense} />
               </Card.Body>

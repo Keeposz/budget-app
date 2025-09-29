@@ -93,4 +93,24 @@ strong {
   .delete-btn:hover {
     color: #ff6b6b;
   }
+  
+  /* Fix dark text issues */
+  p {
+    color: var(--text-color) !important;
+  }
+  
+  .form-control::placeholder,
+  .form-select option {
+    color: #6c757d !important;
+  }
+  
+  .form-control:focus::placeholder {
+    color: #8b949e !important;
+  }
+  
+  /* List group items text */
+  .list-group-item .fw-bold,
+  .list-group-item div {
+    color: var(--text-color) !important;
+  }
 }
