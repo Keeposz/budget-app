@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Navbar, Row, Col, Button } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
@@ -26,6 +26,24 @@ function App() {
   // State for date filtering
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
+  
+  // State for export dropdown
+  const [showExportDropdown, setShowExportDropdown] = useState<boolean>(false);
+  const exportDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (exportDropdownRef.current && !exportDropdownRef.current.contains(event.target as Node)) {
+        setShowExportDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
@@ -265,19 +283,42 @@ function App() {
                           <option key={year} value={year} style={{ color: '#333' }}>{year}</option>
                         ))}
                       </select>
-                      <div className="dropdown">
+                      <div className="position-relative" ref={exportDropdownRef}>
                         <button 
-                          className="btn btn-outline-light btn-sm dropdown-toggle" 
+                          className="btn btn-outline-light btn-sm" 
                           type="button" 
-                          data-bs-toggle="dropdown" 
-                          aria-expanded="false"
+                          onClick={() => setShowExportDropdown(!showExportDropdown)}
                         >
-                          Export
+                          Export ▼
                         </button>
-                        <ul className="dropdown-menu">
-                          <li><button className="dropdown-item" onClick={exportToCSV}>Export as CSV</button></li>
-                          <li><button className="dropdown-item" onClick={exportToJSON}>Export as JSON</button></li>
-                        </ul>
+                        {showExportDropdown && (
+                          <div 
+                            className="position-absolute end-0 mt-1" 
+                            style={{ 
+                              backgroundColor: 'white', 
+                              border: '1px solid #ccc', 
+                              borderRadius: '6px', 
+                              boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                              minWidth: '140px',
+                              zIndex: 1000
+                            }}
+                          >
+                            <button 
+                              className="btn btn-link text-start w-100 text-decoration-none text-dark" 
+                              onClick={() => { exportToCSV(); setShowExportDropdown(false); }}
+                              style={{ padding: '8px 12px', fontSize: '14px' }}
+                            >
+                              📄 Export as CSV
+                            </button>
+                            <button 
+                              className="btn btn-link text-start w-100 text-decoration-none text-dark" 
+                              onClick={() => { exportToJSON(); setShowExportDropdown(false); }}
+                              style={{ padding: '8px 12px', fontSize: '14px' }}
+                            >
+                              📋 Export as JSON
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </Col>
