@@ -1,17 +1,17 @@
-# 💰 Budget App
+# Budget App
 
 Een moderne web-applicatie voor het beheren van persoonlijke uitgaven en het krijgen van inzicht in je maandelijkse kosten.
 
-## ✨ Features
+## Features
 
-- 📊 **Visueel overzicht** - Interactieve grafieken van je uitgaven per categorie
-- 💰 **Vaste kosten beheer** - Stel je maandelijkse vaste kosten in (huur, abonnementen, etc.)
-- 🛒 **Variabele uitgaven tracking** - Houd bij wat je uitgeeft aan boodschappen, uitgaan, etc.
-- 🔐 **Persoonlijke accounts** - Veilige login via Firebase Authentication
-- 🌙 **Dark mode support** - Automatische dark/light mode ondersteuning
-- 📱 **Responsive design** - Werkt perfect op desktop, tablet en mobiel
+- **Visueel overzicht** - Interactieve grafieken van je uitgaven per categorie
+- **Vaste kosten beheer** - Stel je maandelijkse vaste kosten in (huur, abonnementen, etc.)
+- **Variabele uitgaven tracking** - Houd bij wat je uitgeeft aan boodschappen, uitgaan, etc.
+- **Persoonlijke accounts** - Veilige login via Firebase Authentication
+- **Dark mode support** - Automatische dark/light mode ondersteuning
+- **Responsive design** - Werkt perfect op desktop, tablet en mobiel
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Vereisten
 - Node.js (versie 16 of hoger)
@@ -46,7 +46,7 @@ Een moderne web-applicatie voor het beheren van persoonlijke uitgaven en het kri
 
 De app is nu beschikbaar op `http://localhost:3000`
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 - **Frontend**: React 19 met TypeScript
 - **UI Framework**: React Bootstrap 5
@@ -56,7 +56,7 @@ De app is nu beschikbaar op `http://localhost:3000`
 - **Styling**: CSS Custom Properties (CSS Variables)
 - **Build Tool**: Create React App
 
-## 📱 Gebruik
+## Gebruik
 
 ### Eerste keer
 1. Registreer een account of log in
@@ -68,7 +68,7 @@ De app is nu beschikbaar op `http://localhost:3000`
 - **Grafiek**: Visuele weergave van waar je geld naartoe gaat per categorie
 - **Categorieën**: Boodschappen, Huur, Vrije tijd, Mobiliteit, Shopping, etc.
 
-## 🔧 Development
+## Development
 
 ### Scripts
 ```bash
@@ -95,21 +95,21 @@ src/
   └── index.tsx            # Entry point
 ```
 
-## 🎨 Styling
+## Styling
 
 De app gebruikt CSS Custom Properties voor theming en ondersteunt automatisch dark/light mode:
 
 - **Light mode**: Lichte achtergrond, donkere tekst
 - **Dark mode**: Donkere achtergrond, lichte tekst met verbeterd contrast
 
-## 🔐 Security
+## Security
 
 - Environment variables voor gevoelige gegevens (API keys)
 - Firebase Authentication voor gebruikersbeheer
 - Firestore security rules voor data bescherming
 - `.env` bestanden uitgesloten van version control
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork het project
 2. Maak een feature branch (`git checkout -b feature/amazing-feature`)
@@ -117,14 +117,14 @@ De app gebruikt CSS Custom Properties voor theming en ondersteunt automatisch da
 4. Push naar de branch (`git push origin feature/amazing-feature`)
 5. Open een Pull Request
 
-## 📄 License
+## License
 
 Dit project is gelicenseerd onder de MIT License.
 
-## 🙋‍♂️ Support
+## Support
 
 Bij vragen of problemen, open een issue in de GitHub repository.
 
 ---
 
-Gemaakt met ❤️ voor beter persoonlijk financieel overzicht.
+Gemaakt voor beter persoonlijk financieel overzicht.
