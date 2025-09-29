@@ -209,6 +209,7 @@ function App() {
       <html>
       <head>
         <meta charset="utf-8">
+        <link rel="icon" href="/bms-logo.svg" type="image/svg+xml">
         <title>Budget Report - ${displayMonth} ${displayYear}</title>
         <style>
           body { font-family: Arial, sans-serif; margin: 40px; color: #333; }

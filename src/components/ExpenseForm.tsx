@@ -66,6 +66,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
               <option>Subscriptions</option>
               <option>Healthcare</option>
               <option>Insurance</option>
+              <option>Loan</option>
               <option>Other</option>
             </Form.Select>
           </Form.Group>

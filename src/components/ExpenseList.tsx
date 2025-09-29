@@ -20,7 +20,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onDelete }) => {
             <div className="fw-bold">{expense.description}</div>
             {expense.category}
           </div>
-          <Badge bg="primary" pill className="me-2">
+          <Badge bg="secondary" pill className="me-2">
             € {expense.amount.toFixed(2)}
           </Badge>
           <span className="delete-btn" onClick={() => onDelete(expense.id)}>&times;</span>

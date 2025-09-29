@@ -62,6 +62,7 @@ const FixedCostForm: React.FC<FixedCostFormProps> = ({ onAddFixedCost }) => {
               <option>Subscriptions</option>
               <option>Insurance</option>
               <option>Healthcare</option>
+              <option>Loan</option>
               <option>Groceries</option>
               <option>Entertainment</option>
               <option>Transportation</option>
@@ -71,7 +72,7 @@ const FixedCostForm: React.FC<FixedCostFormProps> = ({ onAddFixedCost }) => {
           </Form.Group>
         </Col>
         <Col md={1} className="d-flex align-items-end">
-          <Button variant="secondary" type="submit" className="w-100">Add</Button>
+          <Button variant="primary" type="submit" className="w-100">Add</Button>
         </Col>
       </Row>
     </Form>
