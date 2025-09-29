@@ -34,6 +34,10 @@ function App() {
     setExpenses(prevExpenses => [...prevExpenses, { ...expense, id: uuidv4() }]);
   };
 
+  const deleteExpense = (id: string) => {
+    setExpenses(expenses.filter(expense => expense.id !== id));
+  };
+
   const addFixedCost = (fixedCost: Omit<Expense, 'id'>) => {
     setFixedCosts([...fixedCosts, fixedCost]);
   };
@@ -101,7 +105,7 @@ function App() {
                   <Card.Title className="mb-0">Mijn Uitgaven</Card.Title>
                   <Button variant="outline-primary" onClick={addFixedCostsToExpenses}>Voeg vaste kosten toe</Button>
                 </div>
-                <ExpenseList expenses={expenses} />
+                <ExpenseList expenses={expenses} onDelete={deleteExpense} />
               </Card.Body>
             </Card>
           </Col>

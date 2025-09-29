@@ -13,12 +13,12 @@ const FixedCostForm: React.FC<FixedCostFormProps> = ({ onAddFixedCost }) => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    if (!description || !amount) {
-      alert('Vul een omschrijving en bedrag in.');
+    if (!amount) {
+      alert('Vul een bedrag in.');
       return;
     }
     onAddFixedCost({ 
-      description, 
+      description: description || 'Geen omschrijving', 
       amount: parseFloat(amount), 
       category 
     });
@@ -31,7 +31,7 @@ const FixedCostForm: React.FC<FixedCostFormProps> = ({ onAddFixedCost }) => {
       <Row className="align-items-end">
         <Col md={5}>
           <Form.Group controlId="fixedDescription">
-            <Form.Label>Omschrijving</Form.Label>
+            <Form.Label>Omschrijving (optioneel)</Form.Label>
             <Form.Control 
               type="text" 
               value={description} 
