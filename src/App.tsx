@@ -64,12 +64,14 @@ function App() {
       <Container className="mt-4">
         {/* Row for Chart */}
         <Row className="mb-4">
-          <Col md={{ span: 8, offset: 2 }}>
+          <Col md={{ span: 10, offset: 1 }}>
             <Card>
               <Card.Body>
                 <Card.Title>Overzicht per Categorie</Card.Title>
                 <p className="text-center mb-1">Totaal: <strong>€ {totalAmount.toFixed(2)}</strong></p>
-                {expenses.length > 0 ? <CategoryChart chartData={getChartData()} /> : <p className="text-center">Geen data voor grafiek</p>}
+                <div style={{ maxWidth: '450px', margin: 'auto' }}>
+                  {expenses.length > 0 ? <CategoryChart chartData={getChartData()} /> : <p className="text-center">Geen data voor grafiek</p>}
+                </div>
               </Card.Body>
             </Card>
           </Col>
@@ -77,7 +79,7 @@ function App() {
 
         {/* Row for Expense List */}
         <Row className="mb-4">
-          <Col md={{ span: 8, offset: 2 }}>
+          <Col md={{ span: 10, offset: 1 }}>
             <Card>
               <Card.Body>
                 <Card.Title>Mijn Uitgaven</Card.Title>
@@ -89,7 +91,7 @@ function App() {
 
         {/* Row for Expense Form */}
         <Row className="mb-4">
-          <Col md={{ span: 8, offset: 2 }}>
+          <Col md={{ span: 10, offset: 1 }}>
             <Card>
               <Card.Body>
                 <Card.Title>Nieuwe Uitgave Toevoegen</Card.Title>
