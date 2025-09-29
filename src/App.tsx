@@ -285,37 +285,25 @@ function App() {
                       </select>
                       <div className="position-relative" ref={exportDropdownRef}>
                         <button 
-                          className="btn btn-outline-light btn-sm" 
+                          className="btn btn-outline-light btn-sm dropdown-toggle" 
                           type="button" 
                           onClick={() => setShowExportDropdown(!showExportDropdown)}
                         >
-                          Export ▼
+                          Export
                         </button>
                         {showExportDropdown && (
-                          <div 
-                            className="position-absolute end-0 mt-1" 
-                            style={{ 
-                              backgroundColor: 'white', 
-                              border: '1px solid #ccc', 
-                              borderRadius: '6px', 
-                              boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                              minWidth: '140px',
-                              zIndex: 1000
-                            }}
-                          >
+                          <div className="dropdown-menu show position-absolute end-0 mt-1">
                             <button 
-                              className="btn btn-link text-start w-100 text-decoration-none text-dark" 
+                              className="dropdown-item" 
                               onClick={() => { exportToCSV(); setShowExportDropdown(false); }}
-                              style={{ padding: '8px 12px', fontSize: '14px' }}
                             >
-                              📄 Export as CSV
+                              CSV
                             </button>
                             <button 
-                              className="btn btn-link text-start w-100 text-decoration-none text-dark" 
+                              className="dropdown-item" 
                               onClick={() => { exportToJSON(); setShowExportDropdown(false); }}
-                              style={{ padding: '8px 12px', fontSize: '14px' }}
                             >
-                              📋 Export as JSON
+                              JSON
                             </button>
                           </div>
                         )}
