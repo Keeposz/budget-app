@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, Button, Badge } from 'react-bootstrap';
+import { ListGroup, Badge } from 'react-bootstrap';
 import { Expense } from '../types';
 
 interface FixedCostListProps {

@@ -1,46 +1,130 @@
-# Getting Started with Create React App
+# 💰 Budget App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Een moderne web-applicatie voor het beheren van persoonlijke uitgaven en het krijgen van inzicht in je maandelijkse kosten.
 
-## Available Scripts
+## ✨ Features
 
-In the project directory, you can run:
+- 📊 **Visueel overzicht** - Interactieve grafieken van je uitgaven per categorie
+- 💰 **Vaste kosten beheer** - Stel je maandelijkse vaste kosten in (huur, abonnementen, etc.)
+- 🛒 **Variabele uitgaven tracking** - Houd bij wat je uitgeeft aan boodschappen, uitgaan, etc.
+- 🔐 **Persoonlijke accounts** - Veilige login via Firebase Authentication
+- 🌙 **Dark mode support** - Automatische dark/light mode ondersteuning
+- 📱 **Responsive design** - Werkt perfect op desktop, tablet en mobiel
 
-### `npm start`
+## 🚀 Quick Start
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Vereisten
+- Node.js (versie 16 of hoger)
+- npm of yarn
+- Firebase account
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Installatie
 
-### `npm test`
+1. **Clone het project**
+   ```bash
+   git clone [repository-url]
+   cd budget-app
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. **Installeer dependencies**
+   ```bash
+   npm install
+   ```
 
-### `npm run build`
+3. **Configureer environment variables**
+   - Kopieer `.env.example` naar `.env`
+   - Vul je Firebase configuratie in:
+   ```bash
+   cp .env.example .env
+   # Edit .env met je Firebase keys
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. **Start de development server**
+   ```bash
+   npm start
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+De app is nu beschikbaar op `http://localhost:3000`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🏗️ Tech Stack
 
-### `npm run eject`
+- **Frontend**: React 19 met TypeScript
+- **UI Framework**: React Bootstrap 5
+- **State Management**: React Hooks
+- **Backend**: Firebase (Firestore + Authentication)
+- **Charts**: Chart.js met react-chartjs-2
+- **Styling**: CSS Custom Properties (CSS Variables)
+- **Build Tool**: Create React App
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 📱 Gebruik
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Eerste keer
+1. Registreer een account of log in
+2. Stel je vaste kosten in (huur, internet, abonnementen)
+3. Voeg je uitgaven toe wanneer je iets uitgeeft
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Dashboard
+- **Overzicht**: Zie je totale uitgaven opgedeeld in vaste kosten en variabele uitgaven
+- **Grafiek**: Visuele weergave van waar je geld naartoe gaat per categorie
+- **Categorieën**: Boodschappen, Huur, Vrije tijd, Mobiliteit, Shopping, etc.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 🔧 Development
 
-## Learn More
+### Scripts
+```bash
+npm start          # Start development server
+npm test           # Run tests
+npm run build      # Build voor productie
+npm run eject      # Eject CRA configuratie (niet aanbevolen)
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Project Structuur
+```
+src/
+  ├── components/          # React componenten
+  │   ├── CategoryChart.tsx    # Grafiek component
+  │   ├── ExpenseForm.tsx      # Formulier nieuwe uitgaven
+  │   ├── ExpenseList.tsx      # Lijst van uitgaven
+  │   ├── FixedCostForm.tsx    # Formulier vaste kosten
+  │   ├── FixedCostList.tsx    # Lijst vaste kosten
+  │   └── Login.tsx            # Login/registratie
+  ├── firebase.ts          # Firebase configuratie
+  ├── types.ts             # TypeScript type definities
+  ├── App.tsx              # Hoofd component
+  ├── App.css              # Styling
+  └── index.tsx            # Entry point
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🎨 Styling
+
+De app gebruikt CSS Custom Properties voor theming en ondersteunt automatisch dark/light mode:
+
+- **Light mode**: Lichte achtergrond, donkere tekst
+- **Dark mode**: Donkere achtergrond, lichte tekst met verbeterd contrast
+
+## 🔐 Security
+
+- Environment variables voor gevoelige gegevens (API keys)
+- Firebase Authentication voor gebruikersbeheer
+- Firestore security rules voor data bescherming
+- `.env` bestanden uitgesloten van version control
+
+## 🤝 Contributing
+
+1. Fork het project
+2. Maak een feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit je wijzigingen (`git commit -m 'Add amazing feature'`)
+4. Push naar de branch (`git push origin feature/amazing-feature`)
+5. Open een Pull Request
+
+## 📄 License
+
+Dit project is gelicenseerd onder de MIT License.
+
+## 🙋‍♂️ Support
+
+Bij vragen of problemen, open een issue in de GitHub repository.
+
+---
+
+Gemaakt met ❤️ voor beter persoonlijk financieel overzicht.
