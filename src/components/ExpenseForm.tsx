@@ -13,12 +13,12 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    if (!description || !amount) {
-      alert('Vul een omschrijving en bedrag in.');
+    if (!amount) {
+      alert('Vul een bedrag in.');
       return;
     }
     onAddExpense({ 
-      description, 
+      description: description || 'Geen omschrijving', 
       amount: parseFloat(amount), 
       category 
     });
@@ -31,7 +31,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
       <Row className="align-items-end">
         <Col md={4}>
           <Form.Group controlId="description">
-            <Form.Label>Omschrijving</Form.Label>
+            <Form.Label>Omschrijving (optioneel)</Form.Label>
             <Form.Control 
               type="text" 
               value={description} 
@@ -58,7 +58,9 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
               <option>Boodschappen</option>
               <option>Huur</option>
               <option>Vrije tijd</option>
-              <option>Vervoer</option>
+              <option>Mobiliteit</option>
+              <option>Shopping</option>
+              <option>Nutsvoorzieningen</option>
               <option>Overig</option>
             </Form.Select>
           </Form.Group>

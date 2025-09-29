@@ -5,16 +5,15 @@ import './App.css';
 import { Expense } from './types';
 import ExpenseForm from './components/ExpenseForm';
 import ExpenseList from './components/ExpenseList';
+import CategoryChart from './components/CategoryChart';
 
 function App() {
   const [expenses, setExpenses] = useState<Expense[]>(() => {
-    // Laad de uitgaven uit local storage bij de start
     const savedExpenses = localStorage.getItem('expenses');
     return savedExpenses ? JSON.parse(savedExpenses) : [];
   });
 
   useEffect(() => {
-    // Sla de uitgaven op in local storage telkens als ze wijzigen
     localStorage.setItem('expenses', JSON.stringify(expenses));
   }, [expenses]);
 
@@ -24,11 +23,41 @@ function App() {
 
   const totalAmount = expenses.reduce((total, expense) => total + expense.amount, 0);
 
+  // Data voorbereiden voor de grafiek
+  const getChartData = () => {
+    const categoryTotals: { [key: string]: number } = {};
+    expenses.forEach(expense => {
+      if (categoryTotals[expense.category]) {
+        categoryTotals[expense.category] += expense.amount;
+      } else {
+        categoryTotals[expense.category] = expense.amount;
+      }
+    });
+
+    return {
+      labels: Object.keys(categoryTotals),
+      datasets: [{
+        data: Object.values(categoryTotals),
+        backgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56',
+          '#4BC0C0',
+          '#9966FF',
+          '#FF9F40',
+          '#C9CBCF'
+        ],
+        borderColor: '#fff',
+        borderWidth: 1,
+      }],
+    };
+  };
+
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
-        <Container>
-          <Navbar.Brand href="#home">Budget App</Navbar.Brand>
+        <Container className="justify-content-center">
+          <Navbar.Brand href="#home" className="fw-bold">Budget App</Navbar.Brand>
         </Container>
       </Navbar>
 
@@ -45,8 +74,9 @@ function App() {
           <Col md={4}>
             <Card>
               <Card.Body>
-                <Card.Title>Totaal</Card.Title>
-                <h3 className="text-center">€ {totalAmount.toFixed(2)}</h3>
+                <Card.Title>Overzicht per Categorie</Card.Title>
+                <p className="text-center mb-1">Totaal: <strong>€ {totalAmount.toFixed(2)}</strong></p>
+                {expenses.length > 0 ? <CategoryChart chartData={getChartData()} /> : <p className='text-center'>Geen data voor grafiek</p>}
               </Card.Body>
             </Card>
           </Col>
