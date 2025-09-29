@@ -1,0 +1,11 @@
+.delete-btn {
+  cursor: pointer;
+  color: #aaa;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0 5px;
+}
+
+.delete-btn:hover {
+  color: #dc3545; /* Bootstrap's danger color */
+}

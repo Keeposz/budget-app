@@ -23,7 +23,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onDelete }) => {
           <Badge bg="primary" pill className="me-2">
             € {expense.amount.toFixed(2)}
           </Badge>
-          <Button variant="danger" size="sm" onClick={() => onDelete(expense.id)}>X</Button>
+          <span className="delete-btn" onClick={() => onDelete(expense.id)}>&times;</span>
         </ListGroup.Item>
       ))}
     </ListGroup>

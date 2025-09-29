@@ -23,7 +23,7 @@ const FixedCostList: React.FC<FixedCostListProps> = ({ fixedCosts, onDelete }) =
           <Badge bg="secondary" pill className="me-2">
             € {cost.amount.toFixed(2)}
           </Badge>
-          <Button variant="danger" size="sm" onClick={() => onDelete(index)}>X</Button>
+          <span className="delete-btn" onClick={() => onDelete(index)}>&times;</span>
         </ListGroup.Item>
       ))}
     </ListGroup>
