@@ -31,38 +31,80 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
-      <Card style={{ width: '400px' }}>
-        <Card.Body>
-          <h2 className="text-center mb-4">{isSignUp ? 'Sign Up' : 'Sign In'}</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form onSubmit={handleAuth}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-            </Form.Group>
-            <Form.Group id="password">
-              <Form.Label className="mt-2">Password</Form.Label>
-              <Form.Control type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-            </Form.Group>
-            {isSignUp && (
-              <Form.Group id="confirm-password">
-                <Form.Label className="mt-2">Confirm Password</Form.Label>
-                <Form.Control type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-              </Form.Group>
-            )}
-            <Button className="w-100 mt-4" type="submit">
-              {isSignUp ? 'Sign Up' : 'Sign In'}
-            </Button>
-          </Form>
-          <div className="w-100 text-center mt-3">
-            <Button variant="link" onClick={() => setIsSignUp(!isSignUp)}>
-              {isSignUp ? 'Already have an account? Sign in' : 'Need an account? Sign up'}
-            </Button>
+    <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
+      <Container>
+        <div className="row justify-content-center">
+          <div className="col-md-6 col-lg-5">
+            <div className="professional-header text-center mb-4">
+              <h1 className="fw-bold mb-2">Budget Management System</h1>
+              <p className="mb-0 opacity-75">Financial Dashboard & Expense Tracking</p>
+            </div>
+            
+            <Card className="section-card">
+              <div className="section-header text-center">
+                <h2 className="section-title mb-2">{isSignUp ? 'Create Account' : 'Welcome Back'}</h2>
+                <p className="section-subtitle mb-0">Please {isSignUp ? 'sign up to create' : 'sign in to access'} your account</p>
+              </div>
+              
+              <div className="section-content">
+                {error && <Alert variant="danger" className="mb-3">{error}</Alert>}
+                
+                <Form onSubmit={handleAuth}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Email Address</Form.Label>
+                    <Form.Control 
+                      type="email" 
+                      required 
+                      value={email} 
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email"
+                    />
+                  </Form.Group>
+                  
+                  <Form.Group className="mb-3">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control 
+                      type="password" 
+                      required 
+                      value={password} 
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter your password"
+                    />
+                  </Form.Group>
+                  
+                  {isSignUp && (
+                    <Form.Group className="mb-3">
+                      <Form.Label>Confirm Password</Form.Label>
+                      <Form.Control 
+                        type="password" 
+                        required 
+                        value={confirmPassword} 
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder="Confirm your password"
+                      />
+                    </Form.Group>
+                  )}
+                  
+                  <Button variant="primary" className="w-100 py-3 fw-bold mb-3" type="submit">
+                    {isSignUp ? 'Create Account' : 'Sign In'}
+                  </Button>
+                </Form>
+                
+                <div className="text-center">
+                  <Button 
+                    variant="link" 
+                    onClick={() => setIsSignUp(!isSignUp)}
+                    className="text-decoration-none"
+                  >
+                    {isSignUp ? 'Already have an account? Sign in' : 'Need an account? Sign up'}
+                  </Button>
+                </div>
+              </div>
+            </Card>
           </div>
-        </Card.Body>
-      </Card>
-    </Container>
+        </div>
+      </Container>
+    </div>
   );
 };
 
