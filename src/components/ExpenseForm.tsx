@@ -46,7 +46,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
             <Form.Control 
               type="number" 
               value={amount} 
-              onChange={(e) => setAmount(e.target.value)} 
+              onChange={(e) => setAmount(e.target.value.replace(',', '.'))} 
               placeholder="bv. 12.50"
             />
           </Form.Group>
@@ -62,6 +62,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
               <option>Shopping</option>
               <option>Nutsvoorzieningen</option>
               <option>Belastingen</option>
+              <option>Abonnementen</option>
               <option>Overig</option>
             </Form.Select>
           </Form.Group>

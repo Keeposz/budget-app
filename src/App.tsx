@@ -8,54 +8,93 @@ import ExpenseList from './components/ExpenseList';
 import CategoryChart from './components/CategoryChart';
 import FixedCostForm from './components/FixedCostForm';
 import FixedCostList from './components/FixedCostList';
+import Login from './components/Login';
+import { auth, db } from './firebase';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 
 function App() {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
   // State for dynamic expenses
-  const [expenses, setExpenses] = useState<Expense[]>(() => {
-    const savedExpenses = localStorage.getItem('expenses');
-    return savedExpenses ? JSON.parse(savedExpenses) : [];
-  });
+  const [expenses, setExpenses] = useState<Expense[]>([]);
 
   // State for fixed cost templates
-  const [fixedCosts, setFixedCosts] = useState<Omit<Expense, 'id'>[]>(() => {
-    const savedFixedCosts = localStorage.getItem('fixed_costs');
-    return savedFixedCosts ? JSON.parse(savedFixedCosts) : [];
-  });
+  const [fixedCosts, setFixedCosts] = useState<Omit<Expense, 'id'>[]>([]);
 
   useEffect(() => {
-    localStorage.setItem('expenses', JSON.stringify(expenses));
-  }, [expenses]);
+    const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unsubscribeAuth(); // Cleanup on unmount
+  }, []);
 
   useEffect(() => {
-    localStorage.setItem('fixed_costs', JSON.stringify(fixedCosts));
-  }, [fixedCosts]);
+    if (!user) {
+      setExpenses([]);
+      setFixedCosts([]);
+      return;
+    }
+
+    const docRef = doc(db, 'budgets', user.uid);
+    const unsubscribeFirestore = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setExpenses(data.expenses || []);
+        setFixedCosts(data.fixedCosts || []);
+      } else {
+        // Document doesn't exist, maybe first time user
+        console.log("No budget document found for user, will be created on first add.");
+      }
+    });
+
+    return () => unsubscribeFirestore(); // Cleanup listener on user change or unmount
+  }, [user]);
+
+  const updateFirestore = async (data: { expenses: Expense[], fixedCosts: Omit<Expense, 'id'>[] }) => {
+    if (user) {
+      const docRef = doc(db, 'budgets', user.uid);
+      await setDoc(docRef, data, { merge: true });
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Failed to log out", error);
+    }
+  };
 
   const addExpense = (expense: Omit<Expense, 'id'>) => {
-    setExpenses(prevExpenses => [...prevExpenses, { ...expense, id: uuidv4() }]);
+    const newExpenses = [...expenses, { ...expense, id: uuidv4() }];
+    updateFirestore({ expenses: newExpenses, fixedCosts });
   };
 
   const deleteExpense = (id: string) => {
-    setExpenses(expenses.filter(expense => expense.id !== id));
+    const newExpenses = expenses.filter(expense => expense.id !== id);
+    updateFirestore({ expenses: newExpenses, fixedCosts });
   };
 
   const addFixedCost = (fixedCost: Omit<Expense, 'id'>) => {
-    setFixedCosts([...fixedCosts, fixedCost]);
+    const newFixedCosts = [...fixedCosts, fixedCost];
+    updateFirestore({ expenses, fixedCosts: newFixedCosts });
   };
 
   const deleteFixedCost = (index: number) => {
-    setFixedCosts(fixedCosts.filter((_, i) => i !== index));
+    const newFixedCosts = fixedCosts.filter((_, i) => i !== index);
+    updateFirestore({ expenses, fixedCosts: newFixedCosts });
   };
 
-  const addFixedCostsToExpenses = () => {
-    // Voegt alle vaste kosten in één keer toe aan de uitgaven
-    fixedCosts.forEach(cost => addExpense(cost));
-  };
+  const allExpenses = [...expenses, ...fixedCosts.map(fc => ({ ...fc, id: uuidv4() }))];
 
-  const totalAmount = expenses.reduce((total, expense) => total + expense.amount, 0);
+  const totalAmount = allExpenses.reduce((total, expense) => total + expense.amount, 0);
 
   const getChartData = () => {
     const categoryTotals: { [key: string]: number } = {};
-    expenses.forEach(expense => {
+    allExpenses.forEach(expense => {
       if (categoryTotals[expense.category]) {
         categoryTotals[expense.category] += expense.amount;
       } else {
@@ -74,11 +113,21 @@ function App() {
     };
   };
 
+  if (loading) {
+    return <p>Laden...</p>; // Or a spinner component
+  }
+
+  if (!user) {
+    return <Login />;
+  }
+
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
-        <Container className="justify-content-center">
+        <Container className="justify-content-between">
           <Navbar.Brand href="#home" className="fw-bold">Budget App</Navbar.Brand>
+          {user && <Navbar.Text className="text-light me-3">Ingelogd als: {user.email}</Navbar.Text>}
+          <Button variant="outline-light" onClick={handleLogout}>Uitloggen</Button>
         </Container>
       </Navbar>
 
@@ -90,7 +139,7 @@ function App() {
                 <Card.Title>Overzicht per Categorie</Card.Title>
                 <p className="text-center mb-1">Totaal: <strong>€ {totalAmount.toFixed(2)}</strong></p>
                 <div style={{ maxWidth: '450px', margin: 'auto' }}>
-                  {expenses.length > 0 ? <CategoryChart chartData={getChartData()} /> : <p className="text-center">Geen data voor grafiek</p>}
+                  {allExpenses.length > 0 ? <CategoryChart chartData={getChartData()} /> : <p className="text-center">Geen data voor grafiek</p>}
                 </div>
               </Card.Body>
             </Card>
@@ -103,7 +152,6 @@ function App() {
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center mb-3">
                   <Card.Title className="mb-0">Mijn Uitgaven</Card.Title>
-                  <Button variant="outline-primary" onClick={addFixedCostsToExpenses}>Voeg vaste kosten toe</Button>
                 </div>
                 <ExpenseList expenses={expenses} onDelete={deleteExpense} />
               </Card.Body>
@@ -116,7 +164,7 @@ function App() {
             <Card>
               <Card.Body>
                 <Card.Title>Beheer Vaste Kosten</Card.Title>
-                <p className="text-muted">Stel hier je maandelijkse vaste kosten in. Gebruik de knop hierboven om ze aan de huidige maand toe te voegen.</p>
+                <p className="text-muted">Stel hier je maandelijkse vaste kosten in.</p>
                 <FixedCostForm onAddFixedCost={addFixedCost} />
                 <hr />
                 <FixedCostList fixedCosts={fixedCosts} onDelete={deleteFixedCost} />

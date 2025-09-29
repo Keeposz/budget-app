@@ -46,7 +46,7 @@ const FixedCostForm: React.FC<FixedCostFormProps> = ({ onAddFixedCost }) => {
             <Form.Control 
               type="number" 
               value={amount} 
-              onChange={(e) => setAmount(e.target.value)} 
+              onChange={(e) => setAmount(e.target.value.replace(',', '.'))} 
               placeholder="bv. 800"
             />
           </Form.Group>
@@ -58,6 +58,7 @@ const FixedCostForm: React.FC<FixedCostFormProps> = ({ onAddFixedCost }) => {
               <option>Huur</option>
               <option>Nutsvoorzieningen</option>
               <option>Belastingen</option>
+              <option>Abonnementen</option>
               <option>Boodschappen</option>
               <option>Vrije tijd</option>
               <option>Mobiliteit</option>

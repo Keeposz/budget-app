@@ -9,3 +9,47 @@
 .delete-btn:hover {
   color: #dc3545; /* Bootstrap's danger color */
 }
+
+.card {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+}
+
+.card-title {
+  color: var(--text-color);
+}
+
+.text-muted {
+  color: var(--muted-text) !important; 
+}
+
+.navbar-dark .navbar-brand {
+  color: var(--navbar-text);
+}
+
+.navbar.bg-dark {
+  background-color: var(--navbar-background) !important;
+}
+
+.form-label, .form-control, .form-select {
+  color: var(--text-color);
+  background-color: var(--card-background);
+  border-color: var(--border-color);
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.list-group-item {
+  background-color: var(--card-background);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+strong {
+ color: var(--text-color);
+}
