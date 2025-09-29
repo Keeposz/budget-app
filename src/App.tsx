@@ -47,7 +47,12 @@ function App() {
 
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      // Only set user if email is verified
+      if (currentUser && currentUser.emailVerified) {
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
     return () => unsubscribeAuth(); // Cleanup on unmount
