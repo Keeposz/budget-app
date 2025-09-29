@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Budget Management System Logo">
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#667eea"/>
+      <stop offset="100%" stop-color="#764ba2"/>
+    </linearGradient>
+    <clipPath id="round">
+      <rect x="32" y="32" width="448" height="448" rx="48" ry="48"/>
+    </clipPath>
+  </defs>
+
+  <!-- Rounded container -->
+  <rect x="32" y="32" width="448" height="448" rx="48" ry="48" fill="url(#grad)"/>
+
+  <g clip-path="url(#round)">
+    <!-- Grid / frame lines -->
+    <rect x="72" y="88" width="368" height="336" rx="16" stroke="rgba(255,255,255,0.35)" stroke-width="2" fill="none"/>
+    <line x1="72" y1="400" x2="440" y2="400" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+    <line x1="72" y1="320" x2="440" y2="320" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+    <line x1="72" y1="240" x2="440" y2="240" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+
+    <!-- Bars (fixed, variable, total) -->
+    <rect x="116" y="256" width="56" height="144" rx="8" fill="#ffffff" opacity="0.92"/>
+    <rect x="228" y="208" width="56" height="192" rx="8" fill="#ffffff" opacity="0.92"/>
+    <rect x="340" y="176" width="56" height="224" rx="8" fill="#ffffff" opacity="0.92"/>
+
+    <!-- Line chart overlay -->
+    <path d="M100 360 L180 300 L260 332 L340 220 L420 200" stroke="#ffffff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+    <circle cx="180" cy="300" r="7" fill="#ffffff"/>
+    <circle cx="260" cy="332" r="7" fill="#ffffff"/>
+    <circle cx="340" cy="220" r="7" fill="#ffffff"/>
+    <circle cx="420" cy="200" r="7" fill="#ffffff"/>
+
+    <!-- Currency badge -->
+    <circle cx="112" cy="144" r="28" fill="#ffffff" opacity="0.95"/>
+    <text x="112" y="152" text-anchor="middle" font-family="Inter, Segoe UI, Roboto, Arial, sans-serif" font-size="24" fill="#4a56e2">€</text>
+  </g>
+</svg>
