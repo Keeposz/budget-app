@@ -20,7 +20,8 @@ const FixedCostForm: React.FC<FixedCostFormProps> = ({ onAddFixedCost }) => {
     onAddFixedCost({ 
       description: description || 'No description', 
       amount: parseFloat(amount), 
-      category 
+      category,
+      date: new Date().toISOString()
     });
     setDescription('');
     setAmount('');

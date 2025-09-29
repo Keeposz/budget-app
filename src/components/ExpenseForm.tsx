@@ -20,7 +20,8 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
     onAddExpense({ 
       description: description || 'No description', 
       amount: parseFloat(amount), 
-      category 
+      category,
+      date: new Date().toISOString()
     });
     setDescription('');
     setAmount('');

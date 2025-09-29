@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Navbar, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Navbar, Row, Col, Button } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 import { Expense } from './types';
@@ -22,6 +22,10 @@ function App() {
 
   // State for fixed cost templates
   const [fixedCosts, setFixedCosts] = useState<Omit<Expense, 'id'>[]>([]);
+
+  // State for date filtering
+  const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
 
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
@@ -88,16 +92,97 @@ function App() {
     updateFirestore({ expenses, fixedCosts: newFixedCosts });
   };
 
-  const allExpenses = [...expenses, ...fixedCosts.map(fc => ({ ...fc, id: uuidv4() }))];
+  // Filter expenses by selected month/year
+  const filteredExpenses = expenses.filter(expense => {
+    if (!expense.date) return true; // Include expenses without date (backward compatibility)
+    const expenseDate = new Date(expense.date);
+    return expenseDate.getMonth() === selectedMonth && expenseDate.getFullYear() === selectedYear;
+  });
+
+  // Fixed costs are always included (monthly recurring)
+  const allExpenses = [...filteredExpenses, ...fixedCosts.map(fc => ({ ...fc, id: uuidv4() }))];
 
   const totalAmount = allExpenses.reduce((total, expense) => total + expense.amount, 0);
-  const variableExpensesTotal = expenses.reduce((total, expense) => total + expense.amount, 0);
+  const variableExpensesTotal = filteredExpenses.reduce((total, expense) => total + expense.amount, 0);
   const fixedCostsTotal = fixedCosts.reduce((total, cost) => total + cost.amount, 0);
 
-  // Get current month and year
-  const currentDate = new Date();
-  const currentMonth = currentDate.toLocaleString('en-US', { month: 'long' });
-  const currentYear = currentDate.getFullYear();
+  // Get selected month and year for display
+  const selectedDate = new Date(selectedYear, selectedMonth);
+  const displayMonth = selectedDate.toLocaleString('en-US', { month: 'long' });
+  const displayYear = selectedYear;
+
+  // Generate months for dropdown
+  const months = Array.from({ length: 12 }, (_, i) => {
+    const date = new Date(2024, i);
+    return {
+      value: i,
+      label: date.toLocaleString('en-US', { month: 'long' })
+    };
+  });
+
+  // Generate years (current year ± 2)
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 5 }, (_, i) => currentYear - 2 + i);
+
+  // Export functions
+  const exportToCSV = () => {
+    const headers = ['Date', 'Description', 'Amount', 'Category', 'Type'];
+    const variableRows = filteredExpenses.map(expense => [
+      expense.date ? new Date(expense.date).toLocaleDateString() : 'N/A',
+      expense.description,
+      expense.amount.toFixed(2),
+      expense.category,
+      'Variable'
+    ]);
+    const fixedRows = fixedCosts.map(cost => [
+      'Monthly Recurring',
+      cost.description,
+      cost.amount.toFixed(2),
+      cost.category,
+      'Fixed'
+    ]);
+    
+    const csvContent = [headers, ...variableRows, ...fixedRows]
+      .map(row => row.map(cell => `"${cell}"`).join(','))
+      .join('\n');
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `budget-${displayMonth}-${displayYear}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const exportToJSON = () => {
+    const data = {
+      month: displayMonth,
+      year: displayYear,
+      summary: {
+        totalAmount: totalAmount.toFixed(2),
+        variableExpenses: variableExpensesTotal.toFixed(2),
+        fixedCosts: fixedCostsTotal.toFixed(2),
+        transactionCount: filteredExpenses.length,
+        fixedCostCount: fixedCosts.length
+      },
+      variableExpenses: filteredExpenses,
+      fixedCosts: fixedCosts,
+      exportDate: new Date().toISOString()
+    };
+    
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `budget-data-${displayMonth}-${displayYear}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   const getChartData = () => {
     const categoryTotals: { [key: string]: number } = {};
@@ -152,9 +237,51 @@ function App() {
           <Col>
             <div className="professional-header rounded">
               <Container>
-                <h1 className="mb-2 fw-bold">Financial Dashboard</h1>
-                <p className="mb-1 fs-5 opacity-90">Monthly Budget Overview & Expense Tracking</p>
-                <p className="mb-0 fs-6 opacity-75">{currentMonth} {currentYear}</p>
+                <Row className="align-items-center">
+                  <Col md={8}>
+                    <h1 className="mb-2 fw-bold">Financial Dashboard</h1>
+                    <p className="mb-1 fs-5 opacity-90">Monthly Budget Overview & Expense Tracking</p>
+                    <p className="mb-0 fs-6 opacity-75">{displayMonth} {displayYear}</p>
+                  </Col>
+                  <Col md={4}>
+                    <div className="d-flex gap-2 justify-content-end align-items-center">
+                      <select 
+                        className="form-select form-select-sm text-white" 
+                        style={{ backgroundColor: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)' }}
+                        value={selectedMonth} 
+                        onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
+                      >
+                        {months.map(month => (
+                          <option key={month.value} value={month.value} style={{ color: '#333' }}>{month.label}</option>
+                        ))}
+                      </select>
+                      <select 
+                        className="form-select form-select-sm text-white" 
+                        style={{ backgroundColor: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)', minWidth: '80px' }}
+                        value={selectedYear} 
+                        onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+                      >
+                        {years.map(year => (
+                          <option key={year} value={year} style={{ color: '#333' }}>{year}</option>
+                        ))}
+                      </select>
+                      <div className="dropdown">
+                        <button 
+                          className="btn btn-outline-light btn-sm dropdown-toggle" 
+                          type="button" 
+                          data-bs-toggle="dropdown" 
+                          aria-expanded="false"
+                        >
+                          Export
+                        </button>
+                        <ul className="dropdown-menu">
+                          <li><button className="dropdown-item" onClick={exportToCSV}>Export as CSV</button></li>
+                          <li><button className="dropdown-item" onClick={exportToJSON}>Export as JSON</button></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
               </Container>
             </div>
           </Col>
@@ -240,16 +367,16 @@ function App() {
                   <div className="d-flex justify-content-between align-items-center">
                     <div>
                       <h3 className="section-title">Variable Expenses</h3>
-                      <p className="section-subtitle">{currentMonth} {currentYear} transactions</p>
+                      <p className="section-subtitle">{displayMonth} {displayYear} transactions</p>
                     </div>
                     <div className="text-end">
-                      <div className="fw-bold text-white">{expenses.length}</div>
+                      <div className="fw-bold text-white">{filteredExpenses.length}</div>
                       <small className="text-muted">transactions</small>
                     </div>
                   </div>
                 </div>
                 <div className="section-content">
-                  <ExpenseList expenses={expenses} onDelete={deleteExpense} />
+                  <ExpenseList expenses={filteredExpenses} onDelete={deleteExpense} />
                 </div>
               </div>
             </Col>
