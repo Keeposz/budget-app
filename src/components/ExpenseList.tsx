@@ -9,7 +9,7 @@ interface ExpenseListProps {
 
 const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onDelete }) => {
   if (expenses.length === 0) {
-    return <p>Nog geen uitgaven toegevoegd. Voeg je eerste uitgave hieronder toe!</p>;
+    return <p className="text-muted text-center py-4">No expenses added yet. Add your first expense below!</p>;
   }
 
   return (

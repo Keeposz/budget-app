@@ -15,7 +15,7 @@ const Login: React.FC = () => {
     setError('');
 
     if (isSignUp && password !== confirmPassword) {
-      setError('Wachtwoorden komen niet overeen.');
+      setError('Passwords do not match.');
       return;
     }
 
@@ -34,7 +34,7 @@ const Login: React.FC = () => {
     <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
       <Card style={{ width: '400px' }}>
         <Card.Body>
-          <h2 className="text-center mb-4">{isSignUp ? 'Registreren' : 'Inloggen'}</h2>
+          <h2 className="text-center mb-4">{isSignUp ? 'Sign Up' : 'Sign In'}</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleAuth}>
             <Form.Group id="email">
@@ -42,22 +42,22 @@ const Login: React.FC = () => {
               <Form.Control type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
             </Form.Group>
             <Form.Group id="password">
-              <Form.Label className="mt-2">Wachtwoord</Form.Label>
+              <Form.Label className="mt-2">Password</Form.Label>
               <Form.Control type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
             </Form.Group>
             {isSignUp && (
               <Form.Group id="confirm-password">
-                <Form.Label className="mt-2">Bevestig Wachtwoord</Form.Label>
+                <Form.Label className="mt-2">Confirm Password</Form.Label>
                 <Form.Control type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
               </Form.Group>
             )}
             <Button className="w-100 mt-4" type="submit">
-              {isSignUp ? 'Registreren' : 'Inloggen'}
+              {isSignUp ? 'Sign Up' : 'Sign In'}
             </Button>
           </Form>
           <div className="w-100 text-center mt-3">
             <Button variant="link" onClick={() => setIsSignUp(!isSignUp)}>
-              {isSignUp ? 'Heb je al een account? Log in' : 'Nog geen account? Registreer hier'}
+              {isSignUp ? 'Already have an account? Sign in' : 'Need an account? Sign up'}
             </Button>
           </div>
         </Card.Body>

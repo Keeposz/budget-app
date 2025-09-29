@@ -9,16 +9,16 @@ interface ExpenseFormProps {
 const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
-  const [category, setCategory] = useState('Boodschappen');
+  const [category, setCategory] = useState('Groceries');
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (!amount) {
-      alert('Vul een bedrag in.');
+      alert('Please enter an amount.');
       return;
     }
     onAddExpense({ 
-      description: description || 'Geen omschrijving', 
+      description: description || 'No description', 
       amount: parseFloat(amount), 
       category 
     });
@@ -31,44 +31,44 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
       <Row className="align-items-end">
         <Col md={4}>
           <Form.Group controlId="description">
-            <Form.Label>Omschrijving (optioneel)</Form.Label>
+            <Form.Label>Description (optional)</Form.Label>
             <Form.Control 
               type="text" 
               value={description} 
               onChange={(e) => setDescription(e.target.value)} 
-              placeholder="bv. Lunch"
+              placeholder="e.g. Lunch"
             />
           </Form.Group>
         </Col>
         <Col md={3}>
           <Form.Group controlId="amount">
-            <Form.Label>Bedrag (€)</Form.Label>
+            <Form.Label>Amount (€)</Form.Label>
             <Form.Control 
               type="number" 
               value={amount} 
               onChange={(e) => setAmount(e.target.value.replace(',', '.'))} 
-              placeholder="bv. 12.50"
+              placeholder="e.g. 12.50"
             />
           </Form.Group>
         </Col>
         <Col md={3}>
           <Form.Group controlId="category">
-            <Form.Label>Categorie</Form.Label>
+            <Form.Label>Category</Form.Label>
             <Form.Select value={category} onChange={(e) => setCategory(e.target.value)}>
-              <option>Boodschappen</option>
-              <option>Huur</option>
-              <option>Vrije tijd</option>
-              <option>Mobiliteit</option>
+              <option>Groceries</option>
+              <option>Housing</option>
+              <option>Entertainment</option>
+              <option>Transportation</option>
               <option>Shopping</option>
-              <option>Nutsvoorzieningen</option>
-              <option>Belastingen</option>
-              <option>Abonnementen</option>
-              <option>Overig</option>
+              <option>Utilities</option>
+              <option>Taxes</option>
+              <option>Subscriptions</option>
+              <option>Other</option>
             </Form.Select>
           </Form.Group>
         </Col>
         <Col md={2} className="d-flex align-items-end">
-          <Button variant="primary" type="submit" className="w-100">Toevoegen</Button>
+          <Button variant="primary" type="submit" className="w-100">Add</Button>
         </Col>
       </Row>
     </Form>

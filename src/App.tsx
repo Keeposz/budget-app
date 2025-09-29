@@ -116,7 +116,7 @@ function App() {
   };
 
   if (loading) {
-    return <p>Laden...</p>; // Or a spinner component
+    return <p>Loading...</p>; // Or a spinner component
   }
 
   if (!user) {
@@ -159,22 +159,22 @@ function App() {
           <Row className="g-4 mb-5">
             <Col lg={4} md={6}>
               <div className="stats-card">
-                <div className="stats-label text-primary">Fixed Costs</div>
-                <div className="stats-number text-primary">€{fixedCostsTotal.toFixed(2)}</div>
+                <div className="stats-label text-white">Fixed Costs</div>
+                <div className="stats-number text-white">€{fixedCostsTotal.toFixed(2)}</div>
                 <small className="text-muted">{fixedCosts.length} items</small>
               </div>
             </Col>
             <Col lg={4} md={6}>
               <div className="stats-card">
-                <div className="stats-label text-warning">Variable Expenses</div>
-                <div className="stats-number text-warning">€{variableExpensesTotal.toFixed(2)}</div>
+                <div className="stats-label text-white">Variable Expenses</div>
+                <div className="stats-number text-white">€{variableExpensesTotal.toFixed(2)}</div>
                 <small className="text-muted">{expenses.length} transactions</small>
               </div>
             </Col>
             <Col lg={4}>
               <div className="stats-card">
-                <div className="stats-label text-success">Total Monthly</div>
-                <div className="stats-number text-success">€{totalAmount.toFixed(2)}</div>
+                <div className="stats-label text-white">Total Monthly</div>
+                <div className="stats-number text-white">€{totalAmount.toFixed(2)}</div>
                 <small className="text-muted">Combined expenses</small>
               </div>
             </Col>
@@ -195,29 +195,6 @@ function App() {
                       <small className="text-muted">Add expenses to view distribution</small>
                     </div>
                   )}
-                </div>
-              </div>
-            </Col>
-          </Row>
-
-          {/* Variable Expenses Section */}
-          <Row className="mb-4">
-            <Col>
-              <div className="section-card">
-                <div className="section-header">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                      <h3 className="section-title">Variable Expenses</h3>
-                      <p className="section-subtitle">Current month transactions</p>
-                    </div>
-                    <div className="text-end">
-                      <div className="fw-bold text-primary">{expenses.length}</div>
-                      <small className="text-muted">transactions</small>
-                    </div>
-                  </div>
-                </div>
-                <div className="section-content">
-                  <ExpenseList expenses={expenses} onDelete={deleteExpense} />
                 </div>
               </div>
             </Col>
@@ -244,6 +221,29 @@ function App() {
                     <FixedCostForm onAddFixedCost={addFixedCost} />
                   </div>
                   <FixedCostList fixedCosts={fixedCosts} onDelete={deleteFixedCost} />
+                </div>
+              </div>
+            </Col>
+          </Row>
+
+          {/* Variable Expenses Section */}
+          <Row className="mb-4">
+            <Col>
+              <div className="section-card">
+                <div className="section-header">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <h3 className="section-title">Variable Expenses</h3>
+                      <p className="section-subtitle">Current month transactions</p>
+                    </div>
+                    <div className="text-end">
+                      <div className="fw-bold text-primary">{expenses.length}</div>
+                      <small className="text-muted">transactions</small>
+                    </div>
+                  </div>
+                </div>
+                <div className="section-content">
+                  <ExpenseList expenses={expenses} onDelete={deleteExpense} />
                 </div>
               </div>
             </Col>

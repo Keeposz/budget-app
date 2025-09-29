@@ -9,7 +9,7 @@ interface FixedCostListProps {
 
 const FixedCostList: React.FC<FixedCostListProps> = ({ fixedCosts, onDelete }) => {
   if (fixedCosts.length === 0) {
-    return <p>Nog geen vaste kosten ingesteld.</p>;
+    return <p className="text-muted text-center py-4">No fixed costs set up yet.</p>;
   }
 
   return (

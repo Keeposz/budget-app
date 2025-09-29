@@ -9,16 +9,16 @@ interface FixedCostFormProps {
 const FixedCostForm: React.FC<FixedCostFormProps> = ({ onAddFixedCost }) => {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
-  const [category, setCategory] = useState('Huur');
+  const [category, setCategory] = useState('Housing');
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (!amount) {
-      alert('Vul een bedrag in.');
+      alert('Please enter an amount.');
       return;
     }
     onAddFixedCost({ 
-      description: description || 'Geen omschrijving', 
+      description: description || 'No description', 
       amount: parseFloat(amount), 
       category 
     });
@@ -31,44 +31,44 @@ const FixedCostForm: React.FC<FixedCostFormProps> = ({ onAddFixedCost }) => {
       <Row className="align-items-end">
         <Col md={5}>
           <Form.Group controlId="fixedDescription">
-            <Form.Label>Omschrijving (optioneel)</Form.Label>
+            <Form.Label>Description (optional)</Form.Label>
             <Form.Control 
               type="text" 
               value={description} 
               onChange={(e) => setDescription(e.target.value)} 
-              placeholder="bv. Huur"
+              placeholder="e.g. Rent"
             />
           </Form.Group>
         </Col>
         <Col md={3}>
           <Form.Group controlId="fixedAmount">
-            <Form.Label>Bedrag (€)</Form.Label>
+            <Form.Label>Amount (€)</Form.Label>
             <Form.Control 
               type="number" 
               value={amount} 
               onChange={(e) => setAmount(e.target.value.replace(',', '.'))} 
-              placeholder="bv. 800"
+              placeholder="e.g. 800"
             />
           </Form.Group>
         </Col>
         <Col md={3}>
           <Form.Group controlId="fixedCategory">
-            <Form.Label>Categorie</Form.Label>
+            <Form.Label>Category</Form.Label>
             <Form.Select value={category} onChange={(e) => setCategory(e.target.value)}>
-              <option>Huur</option>
-              <option>Nutsvoorzieningen</option>
-              <option>Belastingen</option>
-              <option>Abonnementen</option>
-              <option>Boodschappen</option>
-              <option>Vrije tijd</option>
-              <option>Mobiliteit</option>
+              <option>Housing</option>
+              <option>Utilities</option>
+              <option>Taxes</option>
+              <option>Subscriptions</option>
+              <option>Groceries</option>
+              <option>Entertainment</option>
+              <option>Transportation</option>
               <option>Shopping</option>
-              <option>Overig</option>
+              <option>Other</option>
             </Form.Select>
           </Form.Group>
         </Col>
         <Col md={1} className="d-flex align-items-end">
-          <Button variant="secondary" type="submit" className="w-100">+</Button>
+          <Button variant="secondary" type="submit" className="w-100">Add</Button>
         </Col>
       </Row>
     </Form>
