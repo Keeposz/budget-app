@@ -30,7 +30,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
   return (
     <Form onSubmit={handleSubmit}>
       <Row className="align-items-end">
-        <Col md={4}>
+        <Col md={5}>
           <Form.Group controlId="description">
             <Form.Label>Description (optional)</Form.Label>
             <Form.Control 
@@ -71,7 +71,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onAddExpense }) => {
             </Form.Select>
           </Form.Group>
         </Col>
-        <Col md={2} className="d-flex align-items-end">
+        <Col md={1} className="d-flex align-items-end">
           <Button variant="primary" type="submit" className="w-100">Add</Button>
         </Col>
       </Row>

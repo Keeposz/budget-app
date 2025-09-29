@@ -474,15 +474,15 @@ function App() {
             </Col>
           </Row>
 
-          {/* Variable Expenses Section */}
-          <Row className="mb-4">
+          {/* Variable Expenses Management */}
+          <Row>
             <Col>
               <div className="section-card">
                 <div className="section-header">
                   <div className="d-flex justify-content-between align-items-center">
                     <div>
-                      <h3 className="section-title">Variable Expenses</h3>
-                      <p className="section-subtitle">{displayMonth} {displayYear} transactions</p>
+                      <h3 className="section-title">Variable Expenses Management</h3>
+                      <p className="section-subtitle">Record and track your {displayMonth} {displayYear} transactions</p>
                     </div>
                     <div className="text-end">
                       <div className="fw-bold text-white">{filteredExpenses.length}</div>
@@ -491,24 +491,10 @@ function App() {
                   </div>
                 </div>
                 <div className="section-content">
-                  <ExpenseList expenses={filteredExpenses} onDelete={deleteExpense} />
-                </div>
-              </div>
-            </Col>
-          </Row>
-
-          {/* Add New Expense */}
-          <Row>
-            <Col>
-              <div className="section-card">
-                <div className="section-header">
-                  <h3 className="section-title">Add New Expense</h3>
-                  <p className="section-subtitle">Record a new transaction to your budget</p>
-                </div>
-                <div className="section-content">
-                  <div className="professional-form">
+                  <div className="professional-form mb-4">
                     <ExpenseForm onAddExpense={addExpense} />
                   </div>
+                  <ExpenseList expenses={filteredExpenses} onDelete={deleteExpense} />
                 </div>
               </div>
             </Col>
